@@ -1,53 +1,38 @@
 package com.jejbuitenhuis.spotitube.authentication;
 
-import com.jejbuitenhuis.spotitube.util.database.Query;
-import org.apache.commons.codec.digest.DigestUtils;
+import com.jejbuitenhuis.spotitube.util.database.DAO;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.UUID;
 
-public class UserDAO
+public class UserDAO extends DAO<User>
 {
-	private static final String QUERY_SAVE_SESSION
-		= "INSERT INTO user_sessions (user, token)" +
-			"VALUES (?, ?);";
+	private static final String QUERY_ALL
+		= "SELECT * " +
+			"FROM users;";
+	private static final String QUERY_ALL_MATCHING
+		= "SELECT * " +
+			"FROM users " +
+			"WHERE username = ?;";
 
-	private final String username;
-	private final String password;
-	private final UUID token;
-
-	public UserDAO(String username, String password)
+	@Override
+	protected User parse(ResultSet row) throws SQLException
 	{
-		this.username = username;
-		this.password = password;
-		this.token = UUID.randomUUID();
-	}
-
-	public UserSessionDTO getSession()
-	{
-		return new UserSessionDTO(
-			this.username,
-			this.token.toString()
+		return new User(
+			row.getString("username"),
+			row.getString("password")
 		);
 	}
 
-	public boolean hasPassword(String password)
+	@Override
+	protected String getQueryAll()
 	{
-		return this.password != null
-			&& DigestUtils.sha256Hex(password).equals(this.password);
+		return QUERY_ALL;
 	}
 
-	public void saveSession() throws SQLException
+	@Override
+	protected String getQueryAllMatching()
 	{
-		var query = Query.create()
-			.withQuery(QUERY_SAVE_SESSION)
-			.withParameters( new Object[]
-				{
-					this.username,
-					this.token,
-				})
-			.build();
-
-		query.execute();
+		return QUERY_ALL_MATCHING;
 	}
 }

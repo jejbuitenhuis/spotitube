@@ -10,12 +10,12 @@ import java.util.List;
 public class ImplementedAuthenticationService implements AuthenticationService
 {
 	@Inject
-	private UserMapper userMapper;
+	private UserDAO userDAO;
 
 	@Override
 	public UserSessionDTO authenticate(UserDTO user) throws SQLException
 	{
-		List<UserDAO> users = this.userMapper.getAllMatching(user);
+		List<User> users = this.userDAO.getAllMatching(user.user);
 
 		if ( users.size() <= 0 ) throw new NoUserFoundException(user);
 

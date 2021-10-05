@@ -98,7 +98,8 @@ public class Query<T>
 			else
 				throw new IllegalArgumentException(
 					"Type of query parameters should be one of \"Integer\"" +
-						", \"String\" or \"Boolean\""
+						", \"String\" or \"Boolean\", not \""
+						+ param.getClass().getSimpleName() + "\""
 				);
 		}
 
