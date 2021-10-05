@@ -9,10 +9,20 @@ import java.util.List;
 
 public class ImplementedAuthenticationService implements AuthenticationService
 {
-	@Inject
 	private UserDAO userDAO;
-	@Inject
 	private UserSessionDAO sessionDAO;
+
+	@Inject
+	public void setUserDAO(UserDAO userDAO)
+	{
+		this.userDAO = userDAO;
+	}
+
+	@Inject
+	public void setSessionDAO(UserSessionDAO sessionDAO)
+	{
+		this.sessionDAO = sessionDAO;
+	}
 
 	@Override
 	public UserSessionDTO authenticate(UserDTO user) throws SQLException

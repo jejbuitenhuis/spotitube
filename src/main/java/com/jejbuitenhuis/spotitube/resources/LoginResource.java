@@ -16,8 +16,13 @@ import java.sql.SQLException;
 @Path("/login/")
 public class LoginResource
 {
-	@Inject
 	private AuthenticationService authService;
+
+	@Inject
+	public void setAuthService(AuthenticationService service)
+	{
+		this.authService = service;
+	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
