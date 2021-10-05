@@ -11,6 +11,8 @@ public class ImplementedAuthenticationService implements AuthenticationService
 {
 	@Inject
 	private UserDAO userDAO;
+	@Inject
+	private UserSessionDAO sessionDAO;
 
 	@Override
 	public UserSessionDTO authenticate(UserDTO user) throws SQLException
@@ -24,9 +26,14 @@ public class ImplementedAuthenticationService implements AuthenticationService
 		if ( !userToCheck.hasPassword(user.password) )
 			throw new IncorrectPasswordException();
 
-		userToCheck.saveSession();
+		var session = userToCheck.createSession();
 
-		return userToCheck.getSession();
+		this.sessionDAO.save(session);
+
+		return new UserSessionDTO(
+			session.getUser(),
+			session.getToken().toString()
+		);
 	}
 
 	@Override

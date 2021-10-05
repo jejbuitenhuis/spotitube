@@ -27,8 +27,7 @@ public abstract class DAO<T>
 
 	public <N> List<T> getAllMatching(N needle) throws SQLException
 	{
-		assert needle != null
-			: "needle cannot be null";
+		assert needle != null : "needle cannot be null";
 
 		String queryString = this.getQueryAllMatching();
 		assert queryString != null
