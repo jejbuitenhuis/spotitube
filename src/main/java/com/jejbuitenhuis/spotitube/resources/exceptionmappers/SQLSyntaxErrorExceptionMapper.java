@@ -1,12 +1,13 @@
 package com.jejbuitenhuis.spotitube.resources.exceptionmappers;
 
+import com.jejbuitenhuis.spotitube.util.exceptions.StacktraceExceptionDTO;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Provider
@@ -26,13 +27,11 @@ public class SQLSyntaxErrorExceptionMapper
 			)).collect( Collectors.toList() );
 
 		return Response.status(Status.INTERNAL_SERVER_ERROR)
-			.entity( new Object()
-				{
-					public final boolean error = true;
-					public final String type = e.getClass().getName();
-					public final String message = e.getMessage();
-					public final List<String> stacktrace = st;
-				})
+			.entity( new StacktraceExceptionDTO(
+				e.getClass().getName(),
+				e.getMessage(),
+				st
+			) )
 			.build();
 	}
 }

@@ -1,5 +1,6 @@
 package com.jejbuitenhuis.spotitube.resources.exceptionmappers;
 
+import com.jejbuitenhuis.spotitube.util.exceptions.ExceptionDTO;
 import com.jejbuitenhuis.spotitube.util.exceptions.authentication.NoUserFoundException;
 
 import javax.ws.rs.core.Response;
@@ -15,13 +16,11 @@ public class NoUserFoundExceptionMapper
 	public Response toResponse(NoUserFoundException e)
 	{
 		return Response.status(Status.BAD_REQUEST)
-			.entity( new Object()
-			{
-				public final boolean error = true;
-				public final String type = e.getClass().getName();
-				public final String message = String.format("Can't find a " +
-						"user with username \"%s\".", e.user.user);
-			})
+			.entity( new ExceptionDTO(
+				e.getClass().getName(),
+				String.format("Can't find a user with username " +
+					"\"%s\".", e.user.user)
+			) )
 			.build();
 	}
 }

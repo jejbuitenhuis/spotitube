@@ -1,5 +1,6 @@
 package com.jejbuitenhuis.spotitube.resources.exceptionmappers;
 
+import com.jejbuitenhuis.spotitube.util.exceptions.ExceptionDTO;
 import com.jejbuitenhuis.spotitube.util.exceptions.authentication.IncorrectPasswordException;
 
 import javax.ws.rs.core.Response;
@@ -15,12 +16,10 @@ public class IncorrectPasswordExceptionMapper
 	public Response toResponse(IncorrectPasswordException e)
 	{
 		return Response.status(Status.UNAUTHORIZED)
-			.entity( new Object()
-			{
-				public final boolean error = true;
-				public final String type = e.getClass().getName();
-				public final String message = "Incorrect password";
-			})
+			.entity( new ExceptionDTO(
+				e.getClass().getName(),
+				"Incorrect password"
+			) )
 			.build();
 	}
 }
