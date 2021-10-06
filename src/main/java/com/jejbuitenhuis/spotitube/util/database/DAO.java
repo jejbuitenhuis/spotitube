@@ -13,8 +13,8 @@ public abstract class DAO<T>
 	public List<T> getAll() throws SQLException
 	{
 		String queryString = this.getQueryAll();
-		assert queryString != null
-			: String.format("Query string for %s:getAll is null",
+		assert queryString != null && !queryString.isEmpty()
+			: String.format("Query string for %s:getAll is null or empty",
 				this.getClass().getSimpleName() );
 
 		var query = Query.<T>create()
@@ -29,8 +29,8 @@ public abstract class DAO<T>
 		assert needle != null : "needle cannot be null";
 
 		String queryString = this.getQueryAllMatching();
-		assert queryString != null
-			: String.format("Query string for %s:getAllMatching is null",
+		assert queryString != null && !queryString.isEmpty()
+			: String.format("Query string for %s:getAllMatching is null or empty",
 				this.getClass().getSimpleName() );
 
 		var query = Query.<T>create()
