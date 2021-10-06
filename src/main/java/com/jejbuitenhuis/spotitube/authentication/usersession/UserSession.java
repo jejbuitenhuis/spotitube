@@ -1,4 +1,4 @@
-package com.jejbuitenhuis.spotitube.authentication;
+package com.jejbuitenhuis.spotitube.authentication.usersession;
 
 import java.util.UUID;
 

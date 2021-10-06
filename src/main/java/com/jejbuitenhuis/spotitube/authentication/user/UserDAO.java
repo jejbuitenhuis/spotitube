@@ -1,5 +1,6 @@
-package com.jejbuitenhuis.spotitube.authentication;
+package com.jejbuitenhuis.spotitube.authentication.user;
 
+import com.jejbuitenhuis.spotitube.authentication.user.User;
 import com.jejbuitenhuis.spotitube.util.database.DAO;
 
 import java.sql.ResultSet;

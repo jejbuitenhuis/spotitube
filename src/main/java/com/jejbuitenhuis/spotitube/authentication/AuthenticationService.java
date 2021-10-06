@@ -1,5 +1,8 @@
 package com.jejbuitenhuis.spotitube.authentication;
 
+import com.jejbuitenhuis.spotitube.authentication.user.UserDTO;
+import com.jejbuitenhuis.spotitube.authentication.usersession.UserSessionDTO;
+
 import java.sql.SQLException;
 
 public interface AuthenticationService

@@ -1,8 +1,8 @@
 package com.jejbuitenhuis.spotitube.resources;
 
 import com.jejbuitenhuis.spotitube.authentication.AuthenticationService;
-import com.jejbuitenhuis.spotitube.authentication.UserDTO;
-import com.jejbuitenhuis.spotitube.authentication.UserSessionDTO;
+import com.jejbuitenhuis.spotitube.authentication.user.UserDTO;
+import com.jejbuitenhuis.spotitube.authentication.usersession.UserSessionDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

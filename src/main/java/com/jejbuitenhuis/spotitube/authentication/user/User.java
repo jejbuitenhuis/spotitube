@@ -1,5 +1,6 @@
-package com.jejbuitenhuis.spotitube.authentication;
+package com.jejbuitenhuis.spotitube.authentication.user;
 
+import com.jejbuitenhuis.spotitube.authentication.usersession.UserSession;
 import org.apache.commons.codec.digest.DigestUtils;
 
 public class User

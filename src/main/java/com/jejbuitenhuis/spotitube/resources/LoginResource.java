@@ -1,7 +1,7 @@
 package com.jejbuitenhuis.spotitube.resources;
 
 import com.jejbuitenhuis.spotitube.authentication.AuthenticationService;
-import com.jejbuitenhuis.spotitube.authentication.UserDTO;
+import com.jejbuitenhuis.spotitube.authentication.user.UserDTO;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;

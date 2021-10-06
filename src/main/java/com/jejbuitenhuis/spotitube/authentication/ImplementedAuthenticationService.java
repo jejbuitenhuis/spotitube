@@ -1,5 +1,10 @@
 package com.jejbuitenhuis.spotitube.authentication;
 
+import com.jejbuitenhuis.spotitube.authentication.user.User;
+import com.jejbuitenhuis.spotitube.authentication.user.UserDAO;
+import com.jejbuitenhuis.spotitube.authentication.user.UserDTO;
+import com.jejbuitenhuis.spotitube.authentication.usersession.UserSessionDAO;
+import com.jejbuitenhuis.spotitube.authentication.usersession.UserSessionDTO;
 import com.jejbuitenhuis.spotitube.util.exceptions.authentication.IncorrectPasswordException;
 import com.jejbuitenhuis.spotitube.util.exceptions.authentication.NoUserFoundException;
 

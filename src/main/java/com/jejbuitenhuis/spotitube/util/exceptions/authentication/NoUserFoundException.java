@@ -1,6 +1,6 @@
 package com.jejbuitenhuis.spotitube.util.exceptions.authentication;
 
-import com.jejbuitenhuis.spotitube.authentication.UserDTO;
+import com.jejbuitenhuis.spotitube.authentication.user.UserDTO;
 
 public class NoUserFoundException extends RuntimeException
 {
