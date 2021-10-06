@@ -8,32 +8,28 @@ public class QueryBuilder<T>
 	private Object parameters[];
 	private QueryParser<T> parser;
 
-	public QueryBuilder<T>
-	withQuery(@NotNull String query)
+	public QueryBuilder<T> withQuery(@NotNull String query)
 	{
 		this.query = query;
 
 		return this;
 	}
 
-	public QueryBuilder<T>
-	withParameters(@NotNull Object parameters[])
+	public QueryBuilder<T> withParameters(@NotNull Object parameters[])
 	{
 		this.parameters = parameters;
 
 		return this;
 	}
 
-	public QueryBuilder<T>
-	withParser(@NotNull QueryParser<T> parser)
+	public QueryBuilder<T> withParser(@NotNull QueryParser<T> parser)
 	{
 		this.parser = parser;
 
 		return this;
 	}
 
-	public Query<T>
-	build()
+	public Query<T> build()
 	{
 		if ( this.query == null || this.query.isEmpty() )
 			throw new RuntimeException("Query was not defined");
