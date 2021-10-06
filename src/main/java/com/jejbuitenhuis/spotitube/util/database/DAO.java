@@ -16,7 +16,7 @@ public abstract class DAO<T>
 		String queryString = this.getQueryAll();
 		assert queryString != null
 			: String.format("Query string for %s:getAll is null",
-					this.getClass().getSimpleName() );
+				this.getClass().getSimpleName() );
 
 		var query = Query.<T>create()
 			.withQuery(queryString)

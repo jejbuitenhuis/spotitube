@@ -77,7 +77,7 @@ class ImplementedAuthenticationServiceTest
 			() -> this.sut.authenticate(userDTO)
 		);
 		Mockito.verify(this.mockedUserDAO).getAllMatching(userDTO.user);
-		assertEquals( userDTO, result.user );
+		assertEquals(userDTO, result.user);
 	}
 
 	@Test
@@ -87,8 +87,8 @@ class ImplementedAuthenticationServiceTest
 		final String password = "wrong";
 		final var userDTO = new UserDTO(username, password);
 		final var user = Mockito.spy( new User(
-				username,
-				DigestUtils.sha256Hex(password)
+			username,
+			DigestUtils.sha256Hex(password)
 		) );
 		final var usersList = new ArrayList<User>();
 

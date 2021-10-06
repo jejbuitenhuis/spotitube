@@ -45,10 +45,10 @@ public class UserSessionDAO extends DAO<UserSession>
 		var query = Query.create()
 			.withQuery(QUERY_SAVE_SESSION)
 			.withParameters( new Object[]
-				 {
+				{
 					session.getUser(),
 					session.getToken().toString()
-				 })
+				})
 			.build();
 
 		query.execute();
