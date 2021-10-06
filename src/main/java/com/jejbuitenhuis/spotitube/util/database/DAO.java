@@ -38,9 +38,9 @@ public abstract class DAO<T>
 			.withQuery(queryString)
 			.withParser(this::parse)
 			.withParameters( new Object[]
-				 {
-					 needle,
-				 })
+				{
+					needle,
+				})
 			.build();
 		return query.execute();
 	}
