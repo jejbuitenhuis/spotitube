@@ -18,8 +18,8 @@ class SettingsTest
 	@Test
 	void whenGetIsCalledWithTestSuccessfulIsReturned()
 	{
-		var result = this.sut.get("test");
+		var result = this.sut.get("database.driver");
 
-		assertEquals("successful", result);
+		assertEquals("com.mysql.jdbc.Driver", result);
 	}
 }
