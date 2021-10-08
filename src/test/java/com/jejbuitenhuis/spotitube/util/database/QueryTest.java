@@ -54,7 +54,6 @@ class QueryTest
 	@Test
 	void whenExecuteIsCalledItShouldReturnAnArrayListWithOneElement() throws SQLException
 	{
-		AtomicInteger timeToCall = new AtomicInteger(1);
 		final var expectedValue = "test";
 		final var expected = new ArrayList<String>();
 		expected.add(expectedValue);
@@ -62,8 +61,8 @@ class QueryTest
 		var mockedResultSet = Mockito.mock(ResultSet.class, Mockito.CALLS_REAL_METHODS);
 
 		Mockito.when( mockedResultSet.next() )
-			// TODO: Make this better
-			.thenAnswer(invocation -> timeToCall.getAndDecrement() > 0);
+			.thenReturn(true)
+			.thenReturn(false);
 		Mockito.when( mockedResultSet.getString( Mockito.anyInt() ) )
 			.thenReturn(expectedValue);
 
