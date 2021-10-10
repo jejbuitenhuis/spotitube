@@ -1,6 +1,5 @@
 package com.jejbuitenhuis.spotitube.authentication.usersession;
 
-import com.jejbuitenhuis.spotitube.authentication.usersession.UserSession;
 import com.jejbuitenhuis.spotitube.util.database.DAO;
 import com.jejbuitenhuis.spotitube.util.database.Query;
 
