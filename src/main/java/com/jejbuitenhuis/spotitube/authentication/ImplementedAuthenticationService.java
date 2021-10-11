@@ -3,6 +3,7 @@ package com.jejbuitenhuis.spotitube.authentication;
 import com.jejbuitenhuis.spotitube.authentication.user.User;
 import com.jejbuitenhuis.spotitube.authentication.user.UserDAO;
 import com.jejbuitenhuis.spotitube.authentication.user.UserDTO;
+import com.jejbuitenhuis.spotitube.authentication.usersession.UserSession;
 import com.jejbuitenhuis.spotitube.authentication.usersession.UserSessionDAO;
 import com.jejbuitenhuis.spotitube.authentication.usersession.UserSessionDTO;
 import com.jejbuitenhuis.spotitube.util.exceptions.authentication.IncorrectPasswordException;
@@ -14,6 +15,7 @@ import java.util.List;
 
 public class ImplementedAuthenticationService implements AuthenticationService
 {
+	// NOTE: Do these need to become interfaces?
 	private UserDAO userDAO;
 	private UserSessionDAO sessionDAO;
 
@@ -54,6 +56,8 @@ public class ImplementedAuthenticationService implements AuthenticationService
 	@Override
 	public boolean isAuthenticated(String token) throws SQLException
 	{
-		return false;
+		List<UserSession> sessions = this.sessionDAO.getAllMatching(token);
+
+		return sessions.size() > 0;
 	}
 }
