@@ -2,6 +2,7 @@ package com.jejbuitenhuis.spotitube.resources.exceptionmappers;
 
 import com.jejbuitenhuis.spotitube.util.exceptions.StacktraceExceptionDTO;
 
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -27,6 +28,7 @@ public class SQLSyntaxErrorExceptionMapper
 			)).collect( Collectors.toList() );
 
 		return Response.status(Status.INTERNAL_SERVER_ERROR)
+			.type(MediaType.APPLICATION_JSON)
 			.entity( new StacktraceExceptionDTO(
 				e.getClass().getName(),
 				e.getMessage(),
