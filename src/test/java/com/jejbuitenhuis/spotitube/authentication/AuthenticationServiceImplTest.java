@@ -114,8 +114,17 @@ class AuthenticationServiceImplTest
 	void whenIsAuthenticatedIsCalledWithAnAuthenticatedUserItShouldReturnTrue() throws SQLException
 	{
 		final String token = "58feed5a-3656-4351-8427-4122c48da2f9";
+		final var getAllMatchingResult = new ArrayList<UserSession>();
+		final var session = new UserSession("test", token);
+
+		getAllMatchingResult.add(session);
+
+		Mockito.when( this.mockedUserSessionDAO.getAllMatching( Mockito.any() ) )
+				.thenReturn(getAllMatchingResult);
 
 		boolean result = this.sut.isAuthenticated(token);
+
+		Mockito.verify(this.mockedUserSessionDAO).getAllMatching( Mockito.any() );
 
 		assertTrue(result);
 	}
