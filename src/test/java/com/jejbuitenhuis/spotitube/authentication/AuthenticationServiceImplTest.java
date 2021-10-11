@@ -18,16 +18,16 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ImplementedAuthenticationServiceTest
+class AuthenticationServiceImplTest
 {
-	private ImplementedAuthenticationService sut;
+	private AuthenticationServiceImpl sut;
 	private UserDAO mockedUserDAO;
 	private UserSessionDAO mockedUserSessionDAO;
 
 	@BeforeEach
 	void setup()
 	{
-		this.sut = new ImplementedAuthenticationService();
+		this.sut = new AuthenticationServiceImpl();
 
 		this.mockedUserDAO = Mockito.mock(UserDAO.class);
 		this.mockedUserSessionDAO = Mockito.mock(UserSessionDAO.class);

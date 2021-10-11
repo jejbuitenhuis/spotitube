@@ -13,7 +13,7 @@ import javax.inject.Inject;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ImplementedAuthenticationService implements AuthenticationService
+public class AuthenticationServiceImpl implements AuthenticationService
 {
 	// NOTE: Do these need to become interfaces?
 	private UserDAO userDAO;
