@@ -15,7 +15,6 @@ import java.util.List;
 
 public class AuthenticationServiceImpl implements AuthenticationService
 {
-	// NOTE: Do these need to become interfaces?
 	private UserDAO userDAO;
 	private UserSessionDAO sessionDAO;
 
