@@ -61,7 +61,7 @@ class AuthenticationServiceImplTest
 
 		Mockito.verify(this.mockedUserDAO).getAllMatching(userDTO.user);
 		Mockito.verify(user).createSession();
-		Mockito.verify(this.mockedUserSessionDAO).save(session);
+		Mockito.verify(this.mockedUserSessionDAO).save( Mockito.anyString(), Mockito.anyString() );
 
 		assertEquals( username, result.user );
 		assertEquals( token, result.token );

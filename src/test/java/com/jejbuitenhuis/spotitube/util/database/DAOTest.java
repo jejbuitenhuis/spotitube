@@ -7,7 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class DAOTest
 {
@@ -29,6 +30,12 @@ class DAOTest
 
 			@Override
 			protected String getQueryAllMatching()
+			{
+				return returnValue;
+			}
+
+			@Override
+			protected String getQuerySave()
 			{
 				return returnValue;
 			}

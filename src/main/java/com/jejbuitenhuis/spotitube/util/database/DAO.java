@@ -9,6 +9,7 @@ public abstract class DAO<T>
 	protected abstract T parse(ResultSet row) throws SQLException;
 	protected abstract String getQueryAll();
 	protected abstract String getQueryAllMatching();
+	protected abstract String getQuerySave();
 
 	public List<T> getAll() throws SQLException
 	{
@@ -42,5 +43,20 @@ public abstract class DAO<T>
 				})
 			.build();
 		return query.execute();
+	}
+
+	public void save(Object ...parameters) throws SQLException
+	{
+		String queryString = this.getQuerySave();
+		assert queryString != null && !queryString.isEmpty()
+			: String.format("Query string for %s:save is null or empty",
+				this.getClass().getSimpleName() );
+
+		var query = Query.create()
+			.withQuery(queryString)
+			.withParameters(parameters)
+			.build();
+
+		query.execute();
 	}
 }

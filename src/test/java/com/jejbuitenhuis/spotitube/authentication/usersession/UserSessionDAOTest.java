@@ -10,7 +10,7 @@ import org.mockito.Mockito;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class UserSessionDAOTest
 {
@@ -68,11 +68,9 @@ class UserSessionDAOTest
 	@Test
 	void whenSaveIsCalledItShouldSaveAUserSessionUsingAQuery() throws SQLException
 	{
-		final var session = Mockito.spy(
-			new UserSession(
-				"test1",
-				"58feed5a-3656-4351-8427-4122c48da2f9"
-			)
+		final var session = new UserSession(
+			"test1",
+			"58feed5a-3656-4351-8427-4122c48da2f9"
 		);
 
 		var mockedQuery = Mockito.mock(Query.class);
@@ -91,7 +89,7 @@ class UserSessionDAOTest
 		{
 			mock.when(Query::create).thenReturn(mockedQueryBuilder);
 
-			this.sut.save(session);
+			this.sut.save( session.getUser(), session.getToken().toString() );
 
 			mock.verify(Query::create);
 
@@ -102,9 +100,6 @@ class UserSessionDAOTest
 				.withParser( Mockito.any(QueryParser.class) );
 
 			Mockito.verify(mockedQuery).execute();
-
-			Mockito.verify(session).getUser();
-			Mockito.verify(session).getToken();
 		}
 	}
 }

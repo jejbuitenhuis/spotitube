@@ -35,4 +35,10 @@ public class UserDAO extends DAO<User>
 	{
 		return QUERY_ALL_MATCHING;
 	}
+
+	@Override
+	protected String getQuerySave()
+	{
+		return null;
+	}
 }

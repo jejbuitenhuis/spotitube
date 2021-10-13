@@ -44,7 +44,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
 
 		var session = userToCheck.createSession();
 
-		this.sessionDAO.save(session);
+		this.sessionDAO.save( session.getUser(), session.getToken().toString() );
 
 		return new UserSessionDTO(
 			session.getUser(),
