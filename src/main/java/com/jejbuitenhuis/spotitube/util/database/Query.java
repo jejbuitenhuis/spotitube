@@ -95,10 +95,12 @@ public class Query<T>
 				statement.setString( i + 1, (String) param );
 			else if (param instanceof Boolean)
 				statement.setBoolean( i + 1, (Boolean) param );
+			else if (param instanceof Long)
+				statement.setLong( i + 1, (Long) param );
 			else
 				throw new IllegalArgumentException(
 					"Type of query parameters should be one of \"Integer\"" +
-						", \"String\" or \"Boolean\", not \""
+						", \"String\", \"Long\" or \"Boolean\", not \""
 						+ param.getClass().getSimpleName() + "\""
 				);
 		}
