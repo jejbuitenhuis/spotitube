@@ -28,7 +28,7 @@ public class AuthenticationFilter implements ContainerRequestFilter
 	@Override
 	public void filter(ContainerRequestContext requestContext)
 	{
-		// TODO: Find a elegant way to match eg "/login/" and "/login" without
+		// TODO: Find an elegant way to match eg "/login/" and "/login" without
 		// specifying both
 		var noAuthEndpoints = Settings.getInstance()
 			.get("authentication.no-auth").split(";");
