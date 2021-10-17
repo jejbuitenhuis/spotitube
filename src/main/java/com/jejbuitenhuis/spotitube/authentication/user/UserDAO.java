@@ -41,4 +41,16 @@ public class UserDAO extends DAO<User>
 	{
 		return null;
 	}
+
+	@Override
+	protected String getQueryDelete()
+	{
+		return null;
+	}
+
+	@Override
+	protected String getQueryUpdate()
+	{
+		return null;
+	}
 }

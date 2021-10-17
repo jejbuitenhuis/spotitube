@@ -39,6 +39,18 @@ class DAOTest
 			{
 				return returnValue;
 			}
+
+			@Override
+			protected String getQueryDelete()
+			{
+				return returnValue;
+			}
+
+			@Override
+			protected String getQueryUpdate()
+			{
+				return returnValue;
+			}
 		};
 	}
 
