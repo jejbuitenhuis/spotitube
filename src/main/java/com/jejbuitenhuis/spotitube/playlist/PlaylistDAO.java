@@ -14,7 +14,9 @@ public class PlaylistDAO extends DAO<Playlist>
 		= "SELECT id, name, owner, length " +
 			"FROM vw_playlists " +
 			"WHERE id = ?;";
-	private static final String QUERY_SAVE = "";
+	private static final String QUERY_SAVE
+		= "INSERT INTO playlists (name, owner) " +
+			"VALUES (?, ?);";
 
 	@Override
 	protected Playlist parse(ResultSet row) throws SQLException

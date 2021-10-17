@@ -65,4 +65,18 @@ public class PlaylistServiceImpl implements PlaylistService
 
 		return this.generatePlaylistsDTO(session, playlists);
 	}
+
+	@Override
+	public int createPlaylist(String userToken, PlaylistDTO newPlaylist) throws SQLException
+	{
+		var session = this.sessionDAO.getAllMatching(userToken)
+			.get(0);
+
+		int insertedId = this.playlistDAO.save(
+			newPlaylist.name,
+			session.getUser()
+		);
+
+		return insertedId;
+	}
 }

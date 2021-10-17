@@ -8,6 +8,8 @@ public class PlaylistDTO
 	public boolean owner;
 	public final Object[] tracks = new Object[0];
 
+	public PlaylistDTO() {}
+
 	public PlaylistDTO(int id, String name, boolean owner)
 	{
 		this.id = id;
