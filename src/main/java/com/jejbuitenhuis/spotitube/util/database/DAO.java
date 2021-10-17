@@ -45,7 +45,7 @@ public abstract class DAO<T>
 		return query.execute();
 	}
 
-	public void save(Object ...parameters) throws SQLException
+	public int save(Object ...parameters) throws SQLException
 	{
 		String queryString = this.getQuerySave();
 		assert queryString != null && !queryString.isEmpty()
@@ -58,5 +58,7 @@ public abstract class DAO<T>
 			.build();
 
 		query.execute();
+
+		return query.getInsertedId();
 	}
 }

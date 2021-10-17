@@ -2,10 +2,7 @@ package com.jejbuitenhuis.spotitube.util.database;
 
 import com.jejbuitenhuis.spotitube.util.Settings;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -20,6 +17,7 @@ public class Query<T>
 	private final QueryParser<T> parser;
 
 	private Connection connection;
+	private int insertedId;
 
 	Query(String query, Object parameters[], QueryParser<T> parser)
 	{
@@ -31,6 +29,11 @@ public class Query<T>
 	public static <T> QueryBuilder<T> create()
 	{
 		return new QueryBuilder<>();
+	}
+
+	public int getInsertedId()
+	{
+		return this.insertedId;
 	}
 
 	public List<T> execute() throws SQLException
@@ -64,6 +67,12 @@ public class Query<T>
 				result.close();
 			}
 
+			// https://stackoverflow.com/a/202533/9946744
+			var keys = statement.getGeneratedKeys();
+
+			if ( keys.next() )
+				this.insertedId = keys.getInt(1);
+
 			this.connection.close();
 			this.connection = null;
 		}
@@ -83,7 +92,10 @@ public class Query<T>
 	{
 		if (this.connection == null) return null;
 
-		var statement = this.connection.prepareStatement(this.query);
+		var statement = this.connection.prepareStatement(
+			this.query,
+			Statement.RETURN_GENERATED_KEYS
+		);
 
 		for (int i = 0; i < this.parameters.length; i++)
 		{
