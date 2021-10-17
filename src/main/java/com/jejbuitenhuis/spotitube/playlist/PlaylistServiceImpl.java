@@ -79,4 +79,10 @@ public class PlaylistServiceImpl implements PlaylistService
 
 		return insertedId;
 	}
+
+	@Override
+	public void updatePlaylistName(long id, PlaylistDTO updatedPlaylist) throws SQLException
+	{
+		this.playlistDAO.update( id, updatedPlaylist.name );
+	}
 }

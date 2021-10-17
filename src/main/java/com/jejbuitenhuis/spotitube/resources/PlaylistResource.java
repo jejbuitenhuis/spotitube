@@ -56,4 +56,20 @@ public class PlaylistResource
 			.entity(playlists)
 			.build();
 	}
+
+	@PUT
+	@Path("/{id}/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updatePlaylistName(
+			@QueryParam("token") String userToken, @PathParam("id") long id,
+			PlaylistDTO updatedPlaylist
+	) throws SQLException
+	{
+		this.playlistService.updatePlaylistName(id, updatedPlaylist);
+
+		var playlists = this.playlistService.getAll(userToken);
+
+		return Response.ok(playlists).build();
+	}
 }

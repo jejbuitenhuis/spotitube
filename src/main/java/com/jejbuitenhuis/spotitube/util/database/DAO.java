@@ -2,6 +2,7 @@ package com.jejbuitenhuis.spotitube.util.database;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class DAO<T>
@@ -10,6 +11,7 @@ public abstract class DAO<T>
 	protected abstract String getQueryAll();
 	protected abstract String getQueryAllMatching();
 	protected abstract String getQuerySave();
+	protected abstract String getQueryUpdate();
 
 	public List<T> getAll() throws SQLException
 	{
@@ -60,5 +62,23 @@ public abstract class DAO<T>
 		query.execute();
 
 		return query.getInsertedId();
+	}
+
+	public void update(long id, Object ...parameters) throws SQLException
+	{
+		String queryString = this.getQueryUpdate();
+		assert queryString != null && !queryString.isEmpty()
+			: String.format("Query string for %s:update is null or empty",
+				this.getClass().getSimpleName() );
+
+		var params = new ArrayList<>( List.of(parameters) );
+		params.add(id);
+
+		var query = Query.create()
+			.withQuery(queryString)
+			.withParameters( params.toArray() )
+			.build();
+
+		query.execute();
 	}
 }

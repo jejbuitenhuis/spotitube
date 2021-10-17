@@ -17,6 +17,10 @@ public class PlaylistDAO extends DAO<Playlist>
 	private static final String QUERY_SAVE
 		= "INSERT INTO playlists (name, owner) " +
 			"VALUES (?, ?);";
+	private static final String QUERY_UPDATE
+		= "UPDATE playlists " +
+			"SET name = ? " +
+			"WHERE id = ?";
 
 	@Override
 	protected Playlist parse(ResultSet row) throws SQLException
@@ -45,5 +49,11 @@ public class PlaylistDAO extends DAO<Playlist>
 	protected String getQuerySave()
 	{
 		return QUERY_SAVE;
+	}
+
+	@Override
+	protected String getQueryUpdate()
+	{
+		return QUERY_UPDATE;
 	}
 }
