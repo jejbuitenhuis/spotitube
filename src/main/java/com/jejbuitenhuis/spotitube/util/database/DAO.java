@@ -11,6 +11,7 @@ public abstract class DAO<T>
 	protected abstract String getQueryAll();
 	protected abstract String getQueryAllMatching();
 	protected abstract String getQuerySave();
+	protected abstract String getQueryDelete();
 	protected abstract String getQueryUpdate();
 
 	public List<T> getAll() throws SQLException
@@ -64,7 +65,25 @@ public abstract class DAO<T>
 		return query.getInsertedId();
 	}
 
-	public void update(long id, Object ...parameters) throws SQLException
+	public <I> void delete(I id) throws SQLException
+	{
+		String queryString = this.getQueryDelete();
+		assert queryString != null && !queryString.isEmpty()
+			: String.format("Query string for %s:update is null or empty",
+				this.getClass().getSimpleName() );
+
+		var query = Query.create()
+			.withQuery(queryString)
+			.withParameters( new Object[]
+				{
+					id
+				})
+			.build();
+
+		query.execute();
+	}
+
+	public <I> void update(I id, Object ...parameters) throws SQLException
 	{
 		String queryString = this.getQueryUpdate();
 		assert queryString != null && !queryString.isEmpty()

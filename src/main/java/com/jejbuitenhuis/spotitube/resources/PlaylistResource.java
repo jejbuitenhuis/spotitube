@@ -57,6 +57,18 @@ public class PlaylistResource
 			.build();
 	}
 
+	@DELETE
+	@Path("/{id}/")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deletePlaylist(
+			@QueryParam("token") String userToken, @PathParam("id") long id ) throws SQLException
+	{
+		this.playlistService.deletePlaylist(id);
+		var playlists = this.playlistService.getAll(userToken);
+
+		return Response.ok(playlists).build();
+	}
+
 	@PUT
 	@Path("/{id}/")
 	@Consumes(MediaType.APPLICATION_JSON)

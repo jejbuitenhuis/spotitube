@@ -81,6 +81,12 @@ public class PlaylistServiceImpl implements PlaylistService
 	}
 
 	@Override
+	public void deletePlaylist(long id) throws SQLException
+	{
+		this.playlistDAO.delete(id);
+	}
+
+	@Override
 	public void updatePlaylistName(long id, PlaylistDTO updatedPlaylist) throws SQLException
 	{
 		this.playlistDAO.update( id, updatedPlaylist.name );

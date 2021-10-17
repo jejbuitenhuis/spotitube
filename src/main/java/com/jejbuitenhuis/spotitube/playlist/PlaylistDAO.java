@@ -17,6 +17,9 @@ public class PlaylistDAO extends DAO<Playlist>
 	private static final String QUERY_SAVE
 		= "INSERT INTO playlists (name, owner) " +
 			"VALUES (?, ?);";
+	private static final String QUERY_DELETE
+		= "DELETE FROM playlists " +
+			"WHERE id = ?";
 	private static final String QUERY_UPDATE
 		= "UPDATE playlists " +
 			"SET name = ? " +
@@ -49,6 +52,12 @@ public class PlaylistDAO extends DAO<Playlist>
 	protected String getQuerySave()
 	{
 		return QUERY_SAVE;
+	}
+
+	@Override
+	protected String getQueryDelete()
+	{
+		return QUERY_DELETE;
 	}
 
 	@Override
