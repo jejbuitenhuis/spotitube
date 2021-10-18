@@ -1,8 +1,15 @@
 package com.jejbuitenhuis.spotitube.track;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Track
 {
+	private final Logger logger = Logger.getLogger( this.getClass().getName() );
+
 	private Long playlistId;
 	private long id;
 	private String title;
@@ -10,7 +17,7 @@ public class Track
 	private long duration;
 	private String album;
 	private Long playcount;
-	private String publicationDate;
+	private Date publicationDate;
 	private String description;
 	private boolean offlineAvailable;
 
@@ -34,7 +41,22 @@ public class Track
 		this.duration = duration;
 		this.album = album;
 		this.playcount = playcount;
-		this.publicationDate = publicationDate;
+		try
+		{
+			if (publicationDate == null)
+				this.publicationDate = null;
+			else
+				this.publicationDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+					.parse(publicationDate);
+		} catch (ParseException e)
+		{
+			this.logger.log(
+				Level.SEVERE,
+				"Error parsing Track publication date",
+				e
+			);
+			this.publicationDate = new Date(0);
+		}
 		this.description = description;
 		this.offlineAvailable = offlineAvailable;
 	}
@@ -74,7 +96,7 @@ public class Track
 		return this.playcount;
 	}
 
-	public String getPublicationDate()
+	public Date getPublicationDate()
 	{
 		return this.publicationDate;
 	}

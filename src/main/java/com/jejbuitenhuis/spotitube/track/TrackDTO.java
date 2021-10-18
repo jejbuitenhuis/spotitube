@@ -1,5 +1,8 @@
 package com.jejbuitenhuis.spotitube.track;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class TrackDTO
 {
 	public long id;
@@ -21,7 +24,7 @@ public class TrackDTO
 		long duration,
 		String album,
 		long playcount,
-		String publicationDate,
+		Date publicationDate,
 		String description,
 		boolean offlineAvailable
 	)
@@ -32,7 +35,11 @@ public class TrackDTO
 		this.duration = duration;
 		this.album = album;
 		this.playcount = playcount;
-		this.publicationDate = publicationDate;
+		if (publicationDate == null)
+			this.publicationDate = null;
+		else
+			this.publicationDate = new SimpleDateFormat("MM-dd-yyyy")
+				.format(publicationDate);
 		this.description = description;
 		this.offlineAvailable = offlineAvailable;
 	}

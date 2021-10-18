@@ -4,5 +4,6 @@ import java.sql.SQLException;
 
 public interface TracksService
 {
-	TracksDTO getAllExcluding(long excludedId) throws SQLException;
+	TracksDTO getAllExcludingPlaylist(long excludedPlaylist) throws SQLException;
+	TracksDTO getAllFromPlaylist(long playlist) throws SQLException;
 }

@@ -12,7 +12,7 @@ import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 
 // NOTE: how do we divide "/tracks/" and "/playlists/{id}/*/"
-@Path("/")
+@Path("/tracks/")
 public class TrackResource
 {
 	private TracksService tracksService;
@@ -24,14 +24,14 @@ public class TrackResource
 	}
 
 	@GET
-	@Path("/tracks/")
+	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getTracks(
 		@QueryParam("token") String userToken,
 		@QueryParam("forPlaylist") long exclude ) throws SQLException
 	{
 		return Response.ok(
-			this.tracksService.getAllExcluding(exclude)
+			this.tracksService.getAllExcludingPlaylist(exclude)
 		).build();
 	}
 }
