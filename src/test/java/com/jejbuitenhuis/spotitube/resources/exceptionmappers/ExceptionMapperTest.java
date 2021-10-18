@@ -5,6 +5,7 @@ import com.jejbuitenhuis.spotitube.util.exceptions.ExceptionDTO;
 import com.jejbuitenhuis.spotitube.util.exceptions.authentication.IncorrectPasswordException;
 import com.jejbuitenhuis.spotitube.util.exceptions.authentication.IncorrectTokenException;
 import com.jejbuitenhuis.spotitube.util.exceptions.authentication.NoUserFoundException;
+import com.jejbuitenhuis.spotitube.util.exceptions.track.TrackNotFoundException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -36,6 +37,7 @@ class ExceptionMapperTest
 	static Stream<Arguments> getMappers()
 	{
 		return Stream.of(
+			arguments( new TrackNotFoundExceptionMapper(), new TrackNotFoundException(), Status.BAD_REQUEST),
 			arguments( new IncorrectPasswordExceptionMapper(), new IncorrectPasswordException(), Status.UNAUTHORIZED),
 			arguments( new IncorrectTokenExceptionMapper(), new IncorrectTokenException(), Status.UNAUTHORIZED),
 			arguments( new NoUserFoundExceptionMapper(), new NoUserFoundException( new UserDTO("test", "test") ), Status.BAD_REQUEST),
