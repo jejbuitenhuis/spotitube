@@ -2,6 +2,7 @@ package com.jejbuitenhuis.spotitube.resources;
 
 import com.jejbuitenhuis.spotitube.playlist.PlaylistDTO;
 import com.jejbuitenhuis.spotitube.playlist.PlaylistService;
+import com.jejbuitenhuis.spotitube.track.TracksService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -14,11 +15,18 @@ import java.sql.SQLException;
 public class PlaylistResource
 {
 	private PlaylistService playlistService;
+	private TracksService tracksService;
 
 	@Inject
 	public void setPlaylistService(PlaylistService resource)
 	{
 		this.playlistService = resource;
+	}
+
+	@Inject
+	public void setTracksService(TracksService service)
+	{
+		this.tracksService = service;
 	}
 
 	@GET
@@ -83,5 +91,17 @@ public class PlaylistResource
 		var playlists = this.playlistService.getAll(userToken);
 
 		return Response.ok(playlists).build();
+	}
+
+	@GET
+	@Path("/{id}/tracks/")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getTracksFromPlaylist(
+		@QueryParam("token") String userToken,
+		@PathParam("id") long playlist ) throws SQLException
+	{
+		return Response.ok(
+			this.tracksService.getAllFromPlaylist(playlist)
+		).build();
 	}
 }
