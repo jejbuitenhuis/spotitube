@@ -10,4 +10,19 @@ public class TracksDTO
 	{
 		this.tracks = tracks;
 	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj) return true;
+		if (obj == null || this.getClass() != obj.getClass()) return false;
+
+		TracksDTO tracksDTO = (TracksDTO) obj;
+
+		for (int i = 0; i < this.tracks.size(); i++)
+			if ( !this.tracks.get(i).equals( tracksDTO.tracks.get(i) ) )
+				return false;
+
+		return true;
+	}
 }

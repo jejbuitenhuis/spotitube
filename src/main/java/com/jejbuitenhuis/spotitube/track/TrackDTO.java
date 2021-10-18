@@ -2,6 +2,7 @@ package com.jejbuitenhuis.spotitube.track;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 public class TrackDTO
 {
@@ -42,5 +43,24 @@ public class TrackDTO
 				.format(publicationDate);
 		this.description = description;
 		this.offlineAvailable = offlineAvailable;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj) return true;
+		if (obj == null || getClass() != obj.getClass()) return false;
+
+		TrackDTO trackDTO = (TrackDTO) obj;
+
+		return id == trackDTO.id
+			&& duration == trackDTO.duration
+			&& offlineAvailable == trackDTO.offlineAvailable
+			&& title.equals(trackDTO.title)
+			&& performer.equals(trackDTO.performer)
+			&& Objects.equals(album, trackDTO.album)
+			&& Objects.equals(playcount, trackDTO.playcount)
+			&& Objects.equals(publicationDate, trackDTO.publicationDate)
+			&& Objects.equals(description, trackDTO.description);
 	}
 }

@@ -18,7 +18,7 @@ public class TracksServiceImpl implements TracksService
 		this.trackDAO = trackDAO;
 	}
 
-	private List<Track> getAllTracksInPlaylist(List<Track> tracks, long playlist)
+	protected List<Track> getAllTracksInPlaylist(List<Track> tracks, long playlist)
 	{
 		var hits = new ArrayList<Track>();
 
@@ -29,7 +29,7 @@ public class TracksServiceImpl implements TracksService
 		return hits;
 	}
 
-	private TracksDTO generateTracksDTO(List<Track> tracks)
+	protected TracksDTO generateTracksDTO(List<Track> tracks)
 	{
 		var trackDTOs = tracks.stream()
 			.map( t -> new TrackDTO(
