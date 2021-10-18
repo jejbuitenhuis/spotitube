@@ -7,7 +7,6 @@ import org.mockito.Mockito;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,14 +23,21 @@ class QueryTest
 	@Test
 	void whenExecuteIsCalledItShouldReturnNull() throws SQLException
 	{
+		var mockedKeys = Mockito.mock(ResultSet.class);
+
+		Mockito.when( mockedKeys.next() )
+				.thenReturn(false);
+
 		var mockedPreparedStatement = Mockito.mock(PreparedStatement.class);
 
 		Mockito.when( mockedPreparedStatement.execute() )
 			.thenReturn(false);
+		Mockito.when( mockedPreparedStatement.getGeneratedKeys() )
+				.thenReturn(mockedKeys);
 
 		var mockedConnection = Mockito.mock(Connection.class);
 
-		Mockito.when( mockedConnection.prepareStatement( Mockito.anyString() ) )
+		Mockito.when( mockedConnection.prepareStatement( Mockito.anyString(), Mockito.eq(Statement.RETURN_GENERATED_KEYS) ) )
 			.thenReturn(mockedPreparedStatement);
 
 		try ( var mockedDriverManager = Mockito.mockStatic(DriverManager.class) )
@@ -43,9 +49,10 @@ class QueryTest
 
 			mockedDriverManager.verify( () -> DriverManager.getConnection( Mockito.anyString() ) );
 
-			Mockito.verify(mockedConnection).prepareStatement( Mockito.anyString() );
+			Mockito.verify(mockedConnection).prepareStatement( Mockito.anyString(), Mockito.eq(Statement.RETURN_GENERATED_KEYS) );
 			Mockito.verify(mockedPreparedStatement).execute();
 			Mockito.verify( mockedPreparedStatement, Mockito.never() ).getResultSet();
+			Mockito.verify(mockedKeys).next();
 
 			assertNull(result);
 		}
@@ -66,16 +73,23 @@ class QueryTest
 		Mockito.when( mockedResultSet.getString( Mockito.anyInt() ) )
 			.thenReturn(expectedValue);
 
+		var mockedKeys = Mockito.mock(ResultSet.class);
+
+		Mockito.when( mockedKeys.next() )
+				.thenReturn(false);
+
 		var mockedPreparedStatement = Mockito.mock(PreparedStatement.class);
 
 		Mockito.when( mockedPreparedStatement.execute() )
 			.thenReturn(true);
 		Mockito.when( mockedPreparedStatement.getResultSet() )
 			.thenReturn(mockedResultSet);
+		Mockito.when( mockedPreparedStatement.getGeneratedKeys() )
+			.thenReturn(mockedKeys);
 
 		var mockedConnection = Mockito.mock(Connection.class);
 
-		Mockito.when( mockedConnection.prepareStatement( Mockito.anyString() ) )
+		Mockito.when( mockedConnection.prepareStatement( Mockito.anyString(), Mockito.eq(Statement.RETURN_GENERATED_KEYS) ) )
 			.thenReturn(mockedPreparedStatement);
 
 		try ( var mockedDriverManager = Mockito.mockStatic(DriverManager.class) )
@@ -87,13 +101,15 @@ class QueryTest
 
 			mockedDriverManager.verify( () -> DriverManager.getConnection( Mockito.anyString() ) );
 
-			Mockito.verify(mockedConnection).prepareStatement( Mockito.anyString() );
+			Mockito.verify(mockedConnection).prepareStatement( Mockito.anyString(), Mockito.eq(Statement.RETURN_GENERATED_KEYS) );
 			Mockito.verify(mockedPreparedStatement).execute();
 			Mockito.verify(mockedPreparedStatement).getResultSet();
+			Mockito.verify(mockedPreparedStatement).getGeneratedKeys();
 			Mockito.verify( mockedResultSet, Mockito.times(2) )
 				.next();
 			Mockito.verify( mockedResultSet, Mockito.times(1) )
 				.getString( Mockito.anyInt() );
+			Mockito.verify(mockedKeys).next();
 
 			assertEquals(expected, result);
 			assertEquals( expectedValue, result.get(0) );
@@ -110,7 +126,7 @@ class QueryTest
 
 		var mockedConnection = Mockito.mock(Connection.class);
 
-		Mockito.when( mockedConnection.prepareStatement( Mockito.anyString() ) )
+		Mockito.when( mockedConnection.prepareStatement( Mockito.anyString(), Mockito.eq(Statement.RETURN_GENERATED_KEYS) ) )
 			.thenReturn(mockedPreparedStatement);
 
 		try ( var mockedDriverManager = Mockito.mockStatic(DriverManager.class) )
@@ -122,7 +138,7 @@ class QueryTest
 
 			mockedDriverManager.verify( () -> DriverManager.getConnection( Mockito.anyString() ) );
 
-			Mockito.verify(mockedConnection).prepareStatement( Mockito.anyString() );
+			Mockito.verify(mockedConnection).prepareStatement( Mockito.anyString(), Mockito.eq(Statement.RETURN_GENERATED_KEYS) );
 		}
 	}
 }
