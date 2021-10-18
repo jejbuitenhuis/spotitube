@@ -141,4 +141,50 @@ class QueryTest
 			Mockito.verify(mockedConnection).prepareStatement( Mockito.anyString(), Mockito.eq(Statement.RETURN_GENERATED_KEYS) );
 		}
 	}
+
+	@Test
+	void whenExecuteIsCalledItShouldSetInsertedIdToTheCorrectValue() throws SQLException
+	{
+		final int createdId = 2;
+
+		var mockedKeys = Mockito.mock(ResultSet.class);
+
+		Mockito.when( mockedKeys.next() )
+			.thenReturn(true)
+			.thenReturn(false);
+		Mockito.when( mockedKeys.getInt(Mockito.anyInt() ) )
+			.thenReturn(createdId);
+
+		var mockedPreparedStatement = Mockito.mock(PreparedStatement.class);
+
+		Mockito.when( mockedPreparedStatement.execute() )
+			.thenReturn(false);
+		Mockito.when( mockedPreparedStatement.getGeneratedKeys() )
+			.thenReturn(mockedKeys);
+
+		var mockedConnection = Mockito.mock(Connection.class);
+
+		Mockito.when( mockedConnection.prepareStatement( Mockito.anyString(), Mockito.eq(Statement.RETURN_GENERATED_KEYS) ) )
+			.thenReturn(mockedPreparedStatement);
+
+		try ( var mockedDriverManager = Mockito.mockStatic(DriverManager.class) )
+		{
+			mockedDriverManager.when( () -> DriverManager.getConnection( Mockito.anyString() ) )
+				.thenReturn(mockedConnection);
+
+			this.sut.execute();
+
+			mockedDriverManager.verify( () -> DriverManager.getConnection( Mockito.anyString() ) );
+
+			Mockito.verify(mockedConnection).prepareStatement( Mockito.anyString(), Mockito.eq(Statement.RETURN_GENERATED_KEYS) );
+			Mockito.verify(mockedPreparedStatement).execute();
+			Mockito.verify( mockedPreparedStatement, Mockito.never() ).getResultSet();
+			Mockito.verify( mockedKeys, Mockito.times(1) )
+				.next();
+			Mockito.verify( mockedKeys, Mockito.times(1) )
+				.getInt( Mockito.anyInt() );
+
+			assertEquals( createdId, this.sut.getInsertedId() );
+		}
+	}
 }
