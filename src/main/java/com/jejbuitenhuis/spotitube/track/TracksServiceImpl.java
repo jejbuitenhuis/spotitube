@@ -33,15 +33,15 @@ public class TracksServiceImpl implements TracksService
 	{
 		var trackDTOs = tracks.stream()
 			.map( t -> new TrackDTO(
-					t.getId(),
-					t.getTitle(),
-					t.getPerformer(),
-					t.getDuration(),
-					t.getAlbum(),
-					t.getPlaycount(),
-					t.getPublicationDate(),
-					t.getDescription(),
-					t.isOfflineAvailable()
+				t.getId(),
+				t.getTitle(),
+				t.getPerformer(),
+				t.getDuration(),
+				t.getAlbum(),
+				t.getPlaycount(),
+				t.getPublicationDate(),
+				t.getDescription(),
+				t.isOfflineAvailable()
 			))
 			.collect( Collectors.toList() );
 
