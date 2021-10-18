@@ -18,6 +18,10 @@ public class TrackDAO extends DAO<Track>
 	private static final String QUERY_SAVE
 		= "INSERT INTO playlist_tracks (playlist_id, track_id) " +
 			"VALUES (?, ?);";
+	private static final String QUERY_DELETE
+		= "DELETE FROM playlist_tracks " +
+			"WHERE playlist_id = ? " +
+			"AND track_id = ?;";
 	private static final String QUERY_UPDATE
 		= "UPDATE tracks " +
 			"SET offline_available = ? " +
@@ -61,7 +65,7 @@ public class TrackDAO extends DAO<Track>
 	@Override
 	protected String getQueryDelete()
 	{
-		return null;
+		return QUERY_DELETE;
 	}
 
 	@Override

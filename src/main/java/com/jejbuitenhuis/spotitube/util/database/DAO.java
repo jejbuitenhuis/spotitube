@@ -65,7 +65,7 @@ public abstract class DAO<T>
 		return query.getInsertedId();
 	}
 
-	public <I> void delete(I id) throws SQLException
+	public <I> void delete(I ...ids) throws SQLException
 	{
 		String queryString = this.getQueryDelete();
 		assert queryString != null && !queryString.isEmpty()
@@ -74,10 +74,7 @@ public abstract class DAO<T>
 
 		var query = Query.create()
 			.withQuery(queryString)
-			.withParameters( new Object[]
-				{
-					id
-				})
+			.withParameters(ids)
 			.build();
 
 		query.execute();

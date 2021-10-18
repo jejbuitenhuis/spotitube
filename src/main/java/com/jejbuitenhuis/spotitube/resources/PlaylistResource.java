@@ -124,4 +124,18 @@ public class PlaylistResource
 			.entity(tracks)
 			.build();
 	}
+
+	@DELETE
+	@Path("/{playlist_id}/tracks/{track_id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteTrackFromPlaylist(
+		@PathParam("playlist_id") long playlist,
+		@PathParam("track_id") long track
+	) throws SQLException
+	{
+		this.tracksService.deleteTrackFromPlaylist(playlist, track);
+		var tracks = this.tracksService.getAllFromPlaylist(playlist);
+
+		return Response.ok(tracks).build();
+	}
 }

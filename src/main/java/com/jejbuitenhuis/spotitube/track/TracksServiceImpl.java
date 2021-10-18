@@ -88,4 +88,10 @@ public class TracksServiceImpl implements TracksService
 
 		return insertedId;
 	}
+
+	@Override
+	public void deleteTrackFromPlaylist(long playlist, long track) throws SQLException
+	{
+		this.trackDAO.delete(playlist, track);
+	}
 }
