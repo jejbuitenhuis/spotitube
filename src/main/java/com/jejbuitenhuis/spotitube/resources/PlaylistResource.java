@@ -18,9 +18,9 @@ public class PlaylistResource
 	private TracksService tracksService;
 
 	@Inject
-	public void setPlaylistService(PlaylistService resource)
+	public void setPlaylistService(PlaylistService service)
 	{
-		this.playlistService = resource;
+		this.playlistService = service;
 	}
 
 	@Inject
