@@ -25,7 +25,7 @@ public class PlaylistServiceImpl implements PlaylistService
 		this.sessionDAO = sessionDAO;
 	}
 
-	private PlaylistsDTO generatePlaylistsDTO(UserSession session, List<Playlist> playlists)
+	protected PlaylistsDTO generatePlaylistsDTO(UserSession session, List<Playlist> playlists)
 	{
 		List<PlaylistDTO> parsedPlaylists = playlists.stream()
 			.map(p -> new PlaylistDTO(

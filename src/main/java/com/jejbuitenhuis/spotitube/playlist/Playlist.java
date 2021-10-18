@@ -2,11 +2,11 @@ package com.jejbuitenhuis.spotitube.playlist;
 
 public class Playlist
 {
-	private int id;
+	private long id;
 	private String name, owner;
 	private long length;
 
-	public Playlist(int id, String name, String owner, long length)
+	public Playlist(long id, String name, String owner, long length)
 	{
 		this.id = id;
 		this.name = name;
@@ -14,7 +14,7 @@ public class Playlist
 		this.length = length;
 	}
 
-	public int getId()
+	public long getId()
 	{
 		return this.id;
 	}
