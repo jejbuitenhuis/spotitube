@@ -98,7 +98,6 @@ public class PlaylistResource
 	@Path("/{id}/tracks/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getTracksFromPlaylist(
-		@QueryParam("token") String userToken,
 		@PathParam("id") long playlist ) throws SQLException
 	{
 		return Response.ok(
