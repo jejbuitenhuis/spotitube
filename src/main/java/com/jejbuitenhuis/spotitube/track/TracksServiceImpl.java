@@ -1,5 +1,7 @@
 package com.jejbuitenhuis.spotitube.track;
 
+import com.jejbuitenhuis.spotitube.util.exceptions.track.TrackNotFoundException;
+
 import javax.inject.Inject;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -70,5 +72,20 @@ public class TracksServiceImpl implements TracksService
 		var playlistTracks = this.getAllTracksInPlaylist(tracks, playlist);
 
 		return this.generateTracksDTO(playlistTracks);
+	}
+
+	@Override
+	public int addTrackToPlaylist(TrackDTO track, long playlist) throws SQLException
+	{
+		var hits = this.trackDAO.getAllMatching(track.id);
+
+		if ( hits.size() <= 0) throw new TrackNotFoundException();
+
+		var hit = hits.get(0);
+
+		var insertedId = this.trackDAO.save( playlist, hit.getId() );
+		this.trackDAO.update( hit.getId(), track.offlineAvailable ? 1 : 0 );
+
+		return insertedId;
 	}
 }

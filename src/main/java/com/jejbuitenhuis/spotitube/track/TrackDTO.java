@@ -10,7 +10,7 @@ public class TrackDTO
 	public String performer;
 	public long duration;
 	public String album;
-	public long playcount;
+	public Long playcount;
 	public String publicationDate;
 	public String description;
 	public boolean offlineAvailable;
@@ -23,7 +23,7 @@ public class TrackDTO
 		String performer,
 		long duration,
 		String album,
-		long playcount,
+		Long playcount,
 		Date publicationDate,
 		String description,
 		boolean offlineAvailable

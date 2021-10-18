@@ -12,8 +12,16 @@ public class TrackDAO extends DAO<Track>
 			"FROM vw_tracks_by_playlist;";
 	private static final String QUERY_ALL_MATCHING
 		= "SELECT * " +
-			"FROM tracks " +
-			"WHERE id = ?;";
+			"FROM vw_tracks_by_playlist " +
+			"WHERE track_id = ? " +
+			"GROUP BY track_id;";
+	private static final String QUERY_SAVE
+		= "INSERT INTO playlist_tracks (playlist_id, track_id) " +
+			"VALUES (?, ?);";
+	private static final String QUERY_UPDATE
+		= "UPDATE tracks " +
+			"SET offline_available = ? " +
+			"WHERE id = ?";
 
 	@Override
 	protected Track parse(ResultSet row) throws SQLException
@@ -47,7 +55,7 @@ public class TrackDAO extends DAO<Track>
 	@Override
 	protected String getQuerySave()
 	{
-		return null;
+		return QUERY_SAVE;
 	}
 
 	@Override
@@ -59,6 +67,6 @@ public class TrackDAO extends DAO<Track>
 	@Override
 	protected String getQueryUpdate()
 	{
-		return null;
+		return QUERY_UPDATE;
 	}
 }
