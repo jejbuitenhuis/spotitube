@@ -20,6 +20,7 @@ public class TracksDTO
 		TracksDTO tracksDTO = (TracksDTO) obj;
 
 		if ( this.tracks.size() != tracksDTO.tracks.size() )
+			return false;
 
 		for (int i = 0; i < this.tracks.size(); i++)
 			if ( !this.tracks.get(i).equals( tracksDTO.tracks.get(i) ) )
