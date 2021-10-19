@@ -1,8 +1,5 @@
 package com.jejbuitenhuis.spotitube.authentication.usersession;
 
-import com.jejbuitenhuis.spotitube.util.database.Query;
-import com.jejbuitenhuis.spotitube.util.database.QueryBuilder;
-import com.jejbuitenhuis.spotitube.util.database.QueryParser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -11,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class UserSessionDAOTest
 {
@@ -66,40 +64,28 @@ class UserSessionDAOTest
 	}
 
 	@Test
-	void whenSaveIsCalledItShouldSaveAUserSessionUsingAQuery() throws SQLException
+	void whenGetQuerySaveIsCalledItShouldReturnTheCorrectQuery()
 	{
-		final var session = new UserSession(
-			"test1",
-			"58feed5a-3656-4351-8427-4122c48da2f9"
-		);
+		final String expected = "INSERT INTO user_sessions (user, token) VALUES (?, ?);";
 
-		var mockedQuery = Mockito.mock(Query.class);
+		var result = this.sut.getQuerySave();
 
-		Mockito.when( mockedQuery.execute() ).thenReturn(null);
+		assertEquals(expected, result);
+	}
 
-		var mockedQueryBuilder = Mockito.mock(QueryBuilder.class);
+	@Test
+	void whenGetQueryDeleteIsCalledItShouldReturnNull()
+	{
+		var result = this.sut.getQueryDelete();
 
-		Mockito.when( mockedQueryBuilder.withQuery( Mockito.anyString() ) )
-			.thenCallRealMethod();
-		Mockito.when( mockedQueryBuilder.withParameters( Mockito.any(Object[].class) ) )
-			.thenCallRealMethod();
-		Mockito.when( mockedQueryBuilder.build() ).thenReturn(mockedQuery);
+		assertNull(result);
+	}
 
-		try ( var mock = Mockito.mockStatic(Query.class) )
-		{
-			mock.when(Query::create).thenReturn(mockedQueryBuilder);
+	@Test
+	void whenGetQueryUpdateIsCalledItShouldReturnNull()
+	{
+		var result = this.sut.getQueryUpdate();
 
-			this.sut.save( session.getUser(), session.getToken().toString() );
-
-			mock.verify(Query::create);
-
-			Mockito.verify(mockedQueryBuilder).withQuery( Mockito.anyString() );
-			Mockito.verify(mockedQueryBuilder).withParameters( Mockito.any(Object[].class) );
-			Mockito.verify(mockedQueryBuilder).build();
-			Mockito.verify( mockedQueryBuilder, Mockito.never() )
-				.withParser( Mockito.any(QueryParser.class) );
-
-			Mockito.verify(mockedQuery).execute();
-		}
+		assertNull(result);
 	}
 }
