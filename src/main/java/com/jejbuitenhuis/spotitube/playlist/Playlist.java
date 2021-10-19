@@ -33,4 +33,18 @@ public class Playlist
 	{
 		return this.length;
 	}
+
+	@Override
+	public boolean equals(Object o)
+	{
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Playlist playlist = (Playlist) o;
+
+		return id == playlist.id
+			&& length == playlist.length
+			&& name.equals(playlist.name)
+			&& owner.equals(playlist.owner);
+	}
 }
