@@ -184,4 +184,88 @@ class DAOTest
 
 		assertThrows( AssertionError.class, () -> sut.save("test") );
 	}
+
+	@Test
+	void whenDeleteIsCalledItShouldDeleteTheGivenObject() throws SQLException
+	{
+		var sut = this.getDAO("test");
+
+		Long arguments[] = new Long[]{ 2L };
+
+		var mockedQuery = Mockito.mock(Query.class);
+
+		Mockito.when( mockedQuery.execute() ).thenReturn(null);
+
+		var mockedQueryBuilder = Mockito.mock(QueryBuilder.class);
+
+		Mockito.when( mockedQueryBuilder.withQuery( Mockito.anyString() ) ).thenCallRealMethod();
+		Mockito.when( mockedQueryBuilder.withParameters( Mockito.any( Object[].class ) ) ).thenCallRealMethod();
+		Mockito.when( mockedQueryBuilder.build() ).thenReturn(mockedQuery);
+
+		try (var mock = Mockito.mockStatic(Query.class) )
+		{
+			mock.when(Query::create).thenReturn(mockedQueryBuilder);
+
+			sut.delete(arguments);
+
+			mock.verify(Query::create);
+
+			Mockito.verify(mockedQueryBuilder).withQuery( Mockito.anyString() );
+			Mockito.verify(mockedQueryBuilder).withParameters(arguments);
+			Mockito.verify(mockedQueryBuilder).build();
+
+			Mockito.verify(mockedQuery).execute();
+		}
+	}
+
+	@Test
+	void whenDeleteIsCalledAndGetQueryDeleteReturnsNullAnAssertionFails()
+	{
+		var sut = this.getDAO(null);
+
+		assertThrows( AssertionError.class, () -> sut.delete("test") );
+	}
+
+	@Test
+	void whenUpdateIsCalledItShouldUpdateTheGivenObject() throws SQLException
+	{
+		var sut = this.getDAO("test");
+
+		long id = 2L;
+		var arguments = new Object[]{ "test" };
+		var expectedArguments = new Object[]{ arguments[0], id };
+
+		var mockedQuery = Mockito.mock(Query.class);
+
+		Mockito.when( mockedQuery.execute() ).thenReturn(null);
+
+		var mockedQueryBuilder = Mockito.mock(QueryBuilder.class);
+
+		Mockito.when( mockedQueryBuilder.withQuery( Mockito.anyString() ) ).thenCallRealMethod();
+		Mockito.when( mockedQueryBuilder.withParameters( Mockito.any( Object[].class ) ) ).thenCallRealMethod();
+		Mockito.when( mockedQueryBuilder.build() ).thenReturn(mockedQuery);
+
+		try (var mock = Mockito.mockStatic(Query.class) )
+		{
+			mock.when(Query::create).thenReturn(mockedQueryBuilder);
+
+			sut.update(id, arguments);
+
+			mock.verify(Query::create);
+
+			Mockito.verify(mockedQueryBuilder).withQuery( Mockito.anyString() );
+			Mockito.verify(mockedQueryBuilder).withParameters(expectedArguments);
+			Mockito.verify(mockedQueryBuilder).build();
+
+			Mockito.verify(mockedQuery).execute();
+		}
+	}
+
+	@Test
+	void whenUpdateIsCalledAndGetQueryUpdateReturnsNullAnAssertionFails()
+	{
+		var sut = this.getDAO(null);
+
+		assertThrows( AssertionError.class, () -> sut.update(1L, "test") );
+	}
 }
