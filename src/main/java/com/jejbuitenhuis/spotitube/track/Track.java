@@ -3,6 +3,7 @@ package com.jejbuitenhuis.spotitube.track;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -115,5 +116,25 @@ public class Track
 	{
 		return this.playlistId != null
 			&& this.playlistId == playlistId;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj) return true;
+		if (obj == null || getClass() != obj.getClass()) return false;
+
+		Track track = (Track) obj;
+
+		return id == track.id
+			&& duration == track.duration
+			&& offlineAvailable == track.offlineAvailable
+			&& playlistId.equals(track.playlistId)
+			&& title.equals(track.title)
+			&& performer.equals(track.performer)
+			&& Objects.equals(album, track.album)
+			&& Objects.equals(playcount, track.playcount)
+			&& Objects.equals(publicationDate, track.publicationDate)
+			&& Objects.equals(description, track.description);
 	}
 }
