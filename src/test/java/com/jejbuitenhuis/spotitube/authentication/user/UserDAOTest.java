@@ -2,13 +2,13 @@ package com.jejbuitenhuis.spotitube.authentication.user;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class UserDAOTest
 {
@@ -60,5 +60,29 @@ class UserDAOTest
 		var result = this.sut.getQueryAllMatching();
 
 		assertEquals(expected, result);
+	}
+
+	@Test
+	void whenGetQuerySaveIsCalledItShouldReturnNull()
+	{
+		var result = this.sut.getQuerySave();
+
+		assertNull(result);
+	}
+
+
+	@Test
+	void whenGetQueryDeleteIsCalledItShouldReturnNull()
+	{
+		var result = this.sut.getQueryDelete();
+
+		assertNull(result);
+	}
+	@Test
+	void whenGetQueryUpdateIsCalledItShouldReturnNull()
+	{
+		var result = this.sut.getQueryUpdate();
+
+		assertNull(result);
 	}
 }
