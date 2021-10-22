@@ -47,7 +47,7 @@ class AuthenticationServiceImplTest
 			username,
 			DigestUtils.sha256Hex(password)
 		) );
-		final var session = new UserSession(username, token);
+		final var session = new UserSession(user, token);
 		final var usersList = new ArrayList<User>();
 
 		usersList.add(user);
@@ -61,7 +61,7 @@ class AuthenticationServiceImplTest
 
 		Mockito.verify(this.mockedUserDAO).getAllMatching(userDTO.user);
 		Mockito.verify(user).createSession();
-		Mockito.verify(this.mockedUserSessionDAO).save( Mockito.anyString(), Mockito.anyString() );
+		Mockito.verify(this.mockedUserSessionDAO).save( Mockito.any(UserSession.class) );
 
 		assertEquals( username, result.user );
 		assertEquals( token, result.token );
@@ -115,7 +115,7 @@ class AuthenticationServiceImplTest
 	{
 		final String token = "58feed5a-3656-4351-8427-4122c48da2f9";
 		final var getAllMatchingResult = new ArrayList<UserSession>();
-		final var session = new UserSession("test", token);
+		final var session = new UserSession( new User("user", "pass"), token );
 
 		getAllMatchingResult.add(session);
 

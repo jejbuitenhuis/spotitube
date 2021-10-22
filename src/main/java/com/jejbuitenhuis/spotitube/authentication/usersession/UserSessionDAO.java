@@ -1,31 +1,13 @@
 package com.jejbuitenhuis.spotitube.authentication.usersession;
 
-import com.jejbuitenhuis.spotitube.util.database.DAO;
+import com.jejbuitenhuis.spotitube.util.database.JPADAO;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-public class UserSessionDAO extends DAO<UserSession>
+public class UserSessionDAO extends JPADAO<UserSession>
 {
 	private static final String QUERY_ALL
-		= "SELECT * " +
-			"FROM user_sessions;";
+		= "SELECT us FROM UserSession us";
 	private static final String QUERY_ALL_MATCHING
-		= "SELECT * " +
-			"FROM user_sessions " +
-			"WHERE token = ?;";
-	private static final String QUERY_SAVE
-		= "INSERT INTO user_sessions (user, token) " +
-			"VALUES (?, ?);";
-
-	@Override
-	protected UserSession parse(ResultSet row) throws SQLException
-	{
-		return new UserSession(
-			row.getString("user"),
-			row.getString("token")
-		);
-	}
+		= "SELECT us FROM UserSession us WHERE us.token = ?1";
 
 	@Override
 	protected String getQueryAll()
@@ -37,23 +19,5 @@ public class UserSessionDAO extends DAO<UserSession>
 	protected String getQueryAllMatching()
 	{
 		return QUERY_ALL_MATCHING;
-	}
-
-	@Override
-	protected String getQuerySave()
-	{
-		return QUERY_SAVE;
-	}
-
-	@Override
-	protected String getQueryDelete()
-	{
-		return null;
-	}
-
-	@Override
-	protected String getQueryUpdate()
-	{
-		return null;
 	}
 }

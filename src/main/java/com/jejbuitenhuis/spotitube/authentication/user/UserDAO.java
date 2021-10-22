@@ -1,28 +1,13 @@
 package com.jejbuitenhuis.spotitube.authentication.user;
 
-import com.jejbuitenhuis.spotitube.util.database.DAO;
+import com.jejbuitenhuis.spotitube.util.database.JPADAO;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-public class UserDAO extends DAO<User>
+public class UserDAO extends JPADAO<User>
 {
 	private static final String QUERY_ALL
-		= "SELECT * " +
-			"FROM users;";
+		= "SELECT u FROM User u";
 	private static final String QUERY_ALL_MATCHING
-		= "SELECT * " +
-			"FROM users " +
-			"WHERE username = ?;";
-
-	@Override
-	protected User parse(ResultSet row) throws SQLException
-	{
-		return new User(
-			row.getString("username"),
-			row.getString("password")
-		);
-	}
+		= "SELECT u FROM User u WHERE u.username = ?1";
 
 	@Override
 	protected String getQueryAll()
@@ -34,23 +19,5 @@ public class UserDAO extends DAO<User>
 	protected String getQueryAllMatching()
 	{
 		return QUERY_ALL_MATCHING;
-	}
-
-	@Override
-	protected String getQuerySave()
-	{
-		return null;
-	}
-
-	@Override
-	protected String getQueryDelete()
-	{
-		return null;
-	}
-
-	@Override
-	protected String getQueryUpdate()
-	{
-		return null;
 	}
 }

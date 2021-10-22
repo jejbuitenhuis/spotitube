@@ -1,25 +1,37 @@
 package com.jejbuitenhuis.spotitube.authentication.usersession;
 
+import com.jejbuitenhuis.spotitube.authentication.user.User;
+
+import javax.persistence.*;
 import java.util.UUID;
 
+@Table(name = "user_sessions")
+@Entity
 public class UserSession
 {
-	private final String user;
-	private final UUID token;
+	@Id
+	@OneToOne
+	@JoinColumn(name = "user", referencedColumnName = "username")
+	private User user;
 
-	public UserSession(String username)
+	@Id
+	private UUID token;
+
+	protected UserSession() {}
+
+	public UserSession(User username)
 	{
 		this.user = username;
 		this.token = UUID.randomUUID();
 	}
 
-	public UserSession(String username, String token)
+	public UserSession(User username, String token)
 	{
 		this.user = username;
 		this.token = UUID.fromString(token);
 	}
 
-	public String getUser()
+	public User getUser()
 	{
 		return this.user;
 	}

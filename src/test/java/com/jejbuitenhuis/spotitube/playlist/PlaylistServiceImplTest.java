@@ -1,5 +1,6 @@
 package com.jejbuitenhuis.spotitube.playlist;
 
+import com.jejbuitenhuis.spotitube.authentication.user.User;
 import com.jejbuitenhuis.spotitube.authentication.usersession.UserSession;
 import com.jejbuitenhuis.spotitube.authentication.usersession.UserSessionDAO;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +16,8 @@ class PlaylistServiceImplTest
 {
 	private static final String userToken = "58feed5a-3656-4351-8427-4122c48da2f9";
 	private static final String userName = "user-test";
-	private static final UserSession userSession = new UserSession(userName, userToken);
+	private static final User user = new User(userName, "test");
+	private static final UserSession userSession = new UserSession(user, userToken);
 
 	private PlaylistServiceImpl sut;
 	private PlaylistDAO mockedPlaylist;

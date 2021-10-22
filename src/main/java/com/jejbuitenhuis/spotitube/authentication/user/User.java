@@ -3,12 +3,20 @@ package com.jejbuitenhuis.spotitube.authentication.user;
 import com.jejbuitenhuis.spotitube.authentication.usersession.UserSession;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Table(name = "users")
+@Entity
 public class User
 {
-	private final String username;
-	private final String password;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private String username;
+
+	private String password;
+
+	protected User() {}
 
 	public User(String username, String password)
 	{
@@ -16,9 +24,14 @@ public class User
 		this.password = password;
 	}
 
+	public String getUsername()
+	{
+		return this.username;
+	}
+
 	public UserSession createSession()
 	{
-		return new UserSession(this.username);
+		return new UserSession(this);
 	}
 
 	public boolean hasPassword(String password)

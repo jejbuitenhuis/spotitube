@@ -31,7 +31,7 @@ public class PlaylistServiceImpl implements PlaylistService
 			.map(p -> new PlaylistDTO(
 				p.getId(),
 				p.getName(),
-				p.isOwner( session.getUser() )
+				p.isOwner( session.getUser().getUsername() )
 			))
 			.collect( Collectors.toList() );
 		long length = playlists.stream()

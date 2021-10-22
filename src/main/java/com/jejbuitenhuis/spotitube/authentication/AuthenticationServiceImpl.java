@@ -10,7 +10,6 @@ import com.jejbuitenhuis.spotitube.util.exceptions.authentication.IncorrectPassw
 import com.jejbuitenhuis.spotitube.util.exceptions.authentication.NoUserFoundException;
 
 import javax.inject.Inject;
-import java.sql.SQLException;
 import java.util.List;
 
 public class AuthenticationServiceImpl implements AuthenticationService
@@ -31,7 +30,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
 	}
 
 	@Override
-	public UserSessionDTO authenticate(UserDTO user) throws SQLException
+	public UserSessionDTO authenticate(UserDTO user)
 	{
 		List<User> users = this.userDAO.getAllMatching(user.user);
 
@@ -44,16 +43,16 @@ public class AuthenticationServiceImpl implements AuthenticationService
 
 		var session = userToCheck.createSession();
 
-		this.sessionDAO.save( session.getUser(), session.getToken().toString() );
+		this.sessionDAO.save(session);
 
 		return new UserSessionDTO(
-			session.getUser(),
+			session.getUser().getUsername(),
 			session.getToken().toString()
 		);
 	}
 
 	@Override
-	public boolean isAuthenticated(String token) throws SQLException
+	public boolean isAuthenticated(String token)
 	{
 		List<UserSession> sessions = this.sessionDAO.getAllMatching(token);
 
